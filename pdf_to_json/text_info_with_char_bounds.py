@@ -68,7 +68,7 @@ class ExtractTextInfoWithCharBoundsFromPDF:
 
             # Creates an output stream and copy stream asset's content to it
             output_file_path = self.create_output_file_path()
-            with open(r"C:\Users\Usama Ahmed\Documents\Quresh_Kitchen\pdf_to_json\output\3.zip", "wb") as file:
+            with open(r"C:\Users\Usama Ahmed\Documents\Quresh_Kitchen\pdf_to_json\output\text_info_with_char_bounds.zip", "wb") as file:
                 file.write(stream_asset.get_input_stream())
         except (ServiceApiException, ServiceUsageException, SdkException) as e:
             logging.exception(f'Exception encountered while executing operation: {e}')

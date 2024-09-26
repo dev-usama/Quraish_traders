@@ -1,8 +1,10 @@
 from flask import Flask, render_template
+from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 import os
 
 app = Flask(__name__)
+CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = r'sqlite:///C:\Users\Usama Ahmed\Documents\Quresh_Kitchen\Quresh_Database\instance\product_database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = os.environ.get("task2_key")  # Change this to a secure random key
@@ -25,4 +27,4 @@ if __name__ == '__main__':
         db.create_all()
     if not os.path.exists(app.config['UPLOAD_FOLDER']):
         os.makedirs(app.config['UPLOAD_FOLDER'])
-    app.run(debug=True)
+    app.run(host="0.0.0.0", debug=True)

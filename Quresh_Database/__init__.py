@@ -26,7 +26,6 @@ def b64encode_filter(data):
         return ''
     return base64.b64encode(data).decode('utf-8')
 
-
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     no = db.Column(db.Integer, unique=True, nullable=False)
@@ -171,8 +170,6 @@ def update_image(product_id):
             flash('Image updated successfully')
     return redirect(url_for('excel_to_db.index'))
 
-
-
 def process_excel(file_path):
     logging.basicConfig(level=logging.DEBUG)
     logger = logging.getLogger(__name__)
@@ -180,10 +177,9 @@ def process_excel(file_path):
     try:
         # Skip the first 2 rows (headers) and use the 3rd row as column names
         df = pd.read_excel(file_path, skiprows=2, header=0)
-        logger.debug(f"DataFrame columns: {df.columns}")
-        logger.debug(f"First few rows:\n{df.head()}")
+        # logger.debug(f"DataFrame columns: {df.columns}")
+        # logger.debug(f"First few rows:\n{df.head()}")
 
-        # Rename columns to match your model
         df = df.rename(columns={
             'Unnamed: 0': 'no',
             'Unnamed: 1': 'unique_model_code',
@@ -195,13 +191,11 @@ def process_excel(file_path):
         workbook = load_workbook(file_path)
         sheet = workbook.active
         image_loader = SheetImageLoader(sheet)
-        
         skipped_rows = 0
         processed_rows = 0
         i = 4
         for _, row in df.iterrows():
             try:
-                # Convert 'no' to integer, skip if not possible
                 try:
                     no = int(row['no']) # no means number
                 except (ValueError, TypeError):
@@ -231,9 +225,10 @@ def process_excel(file_path):
                 try:
                     db.session.flush()
                     processed_rows += 1
-                except IntegrityError:
+                except Exception as e:
                     db.session.rollback()
                     skipped_rows += 1
+                    logger.error(str(e))
                     logger.warning(f"Skipping row with duplicate No. {no}: {row}")
                     continue
             except Exception as e:
@@ -242,7 +237,6 @@ def process_excel(file_path):
                 db.session.rollback()
                 skipped_rows += 1
                 continue
-
         db.session.commit()
         flash(f'Excel file processed successfully. Processed {processed_rows} rows, skipped {skipped_rows} rows.', 'success')
     except Exception as e:

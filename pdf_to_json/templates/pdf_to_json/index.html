@@ -14,12 +14,11 @@
     <div class="d-flex text-primary justify-content-center">
       <h1>Convert PDF to JSON</h1>
     </div>
-    <form enctype="multipart/form-data" action="{{ url_for('pdf_to_json.text') }}" method="POST">
+    <form method="POST" action="{{ url_for('pdf_to_json.index') }}" enctype="multipart/form-data">
       <div class="input-group mb-3">
         <input type="file" class="form-control" id="inputGroupFile02" name="PDF" accept="application/pdf">
       </div>
       <select class="form-select mb-3" name="options" >
-          <option selected>Extract text from PDF</option>
           <option value="1">Extract text from PDF</option>
           <option value="2">Extract text info with char bounds from pdf</option>
           <option value="3">Extract text table info from pdf</option>
