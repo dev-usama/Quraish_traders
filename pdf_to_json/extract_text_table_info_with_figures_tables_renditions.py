@@ -69,7 +69,6 @@ class ExtractTextTableInfoWithFiguresTablesRenditionsFromPDF:
             stream_asset: StreamAsset = pdf_services.get_content(result_asset)
 
             # Creates an output stream and copy stream asset's content to it
-            output_file_path = self.create_output_file_path()
             with open(r"C:\Users\Usama Ahmed\Documents\Quresh_Kitchen\pdf_to_json\output\extract_text_table_info_with_figures_tables_renditions.zip", "wb") as file:
                 file.write(stream_asset.get_input_stream())
 

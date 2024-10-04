@@ -69,14 +69,14 @@ def text3():
 @project3.route("/text_table_info_with_char")
 def text4():
     file = open(r"C:\Users\Usama Ahmed\Documents\Quresh_Kitchen\pdf_to_json\static\temp.pdf", "rb")
-    ExtractTextInfoWithCharBoundsFromPDF(file)
+    ExtractTextTableInfoWithCharBoundsFromPDF(file)
     buffer = BytesIO()
     with open(r"C:\Users\Usama Ahmed\Documents\Quresh_Kitchen\pdf_to_json\output\text_table_info_with_char_bounds.zip", "rb") as file:
         buffer.write(file.read())
     buffer.seek(0)
     return send_file(buffer, as_attachment=True, download_name='text_table_info_with_char_bounds.zip', mimetype='application/zip')
 
-@project3.route("/6", methods=["POST"])
+@project3.route("/5")
 def text5():
     file = open(r"C:\Users\Usama Ahmed\Documents\Quresh_Kitchen\pdf_to_json\static\temp.pdf", "rb")
     ExtractTextTableInfoWithFiguresTablesRenditionsFromPDF(file)
@@ -86,27 +86,27 @@ def text5():
     buffer.seek(0)
     return send_file(buffer, as_attachment=True, download_name='extract_text_table_info_with_figures_tables_renditions.zip', mimetype='application/zip')
 
-@project3.route("/7")
+@project3.route("/6")
 def text6():
     file = open(r"C:\Users\Usama Ahmed\Documents\Quresh_Kitchen\pdf_to_json\static\temp.pdf", "rb")
-    ExtractTextInfoFromPDF(file)
+    ExtractTextTableInfoWithFiguresTablesRenditionsFromPDF(file)
     buffer = BytesIO()
     with open(r"C:\Users\Usama Ahmed\Documents\Quresh_Kitchen\pdf_to_json\output\extract_text_table_info_with_renditions.zip", "rb") as file:
         buffer.write(file.read())
     buffer.seek(0)
     return send_file(buffer, as_attachment=True, download_name='text_table_info_with_renditions.zip', mimetype='application/zip')
 
-@project3.route("/8")
+@project3.route("/7")
 def text7():
     file = open(r"C:\Users\Usama Ahmed\Documents\Quresh_Kitchen\pdf_to_json\static\temp.pdf", "rb")
-    ExtractTextTableInfoWithStylingFromPDF(file)
+    ExtractTextTableInfoWithFiguresTablesRenditionsFromPDF(file)
     buffer = BytesIO()
     with open(r"C:\Users\Usama Ahmed\Documents\Quresh_Kitchen\pdf_to_json\output\extract_text_table_info_with_styling.zip", "rb") as file:
         buffer.write(file.read())
     buffer.seek(0)
-    return send_file(buffer, as_attachment=True, download_name='text_table_info_with_styling.zip', mimetype='application/zip')
+    return send_file(buffer, as_attachment=True, download_name='text_table_info_with_figure_table_renditions.zip', mimetype='application/zip')
 
-@project3.route("/9")
+@project3.route("/8")
 def text8():
     file = open(r"C:\Users\Usama Ahmed\Documents\Quresh_Kitchen\pdf_to_json\static\temp.pdf", "rb")
     ExtractTextTableInfoWithTableStructureFromPDF(file)
