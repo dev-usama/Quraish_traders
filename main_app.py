@@ -14,8 +14,8 @@ app.config['SECRET_KEY'] = os.environ.get("secret_key")
 print('Secret Key:', os.environ.get("secret_key"))
 app.config['UPLOAD_FOLDER'] = 'uploads'
 db = SQLAlchemy(app)
-from Quresh_Database import project1
-from pdf_to_json import project3
+from productstore import project1
+from pdftojson import project3
 
 app.register_blueprint(project1, url_prefix="/excel_to_db")
 app.register_blueprint(project3, url_prefix="/PDF_TO_JSON")

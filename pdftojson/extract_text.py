@@ -12,16 +12,13 @@ from datetime import datetime
 
 from adobe.pdfservices.operation.auth.service_principal_credentials import ServicePrincipalCredentials
 from adobe.pdfservices.operation.exception.exceptions import ServiceApiException, ServiceUsageException, SdkException
+from adobe.pdfservices.operation.pdf_services_media_type import PDFServicesMediaType
 from adobe.pdfservices.operation.io.cloud_asset import CloudAsset
 from adobe.pdfservices.operation.io.stream_asset import StreamAsset
 from adobe.pdfservices.operation.pdf_services import PDFServices
-from adobe.pdfservices.operation.pdf_services_media_type import PDFServicesMediaType
 from adobe.pdfservices.operation.pdfjobs.jobs.extract_pdf_job import ExtractPDFJob
 from adobe.pdfservices.operation.pdfjobs.params.extract_pdf.extract_element_type import ExtractElementType
 from adobe.pdfservices.operation.pdfjobs.params.extract_pdf.extract_pdf_params import ExtractPDFParams
-from adobe.pdfservices.operation.pdfjobs.params.extract_pdf.extract_renditions_element_type import \
-    ExtractRenditionsElementType
-from adobe.pdfservices.operation.pdfjobs.params.extract_pdf.table_structure_type import TableStructureType
 from adobe.pdfservices.operation.pdfjobs.result.extract_pdf_result import ExtractPDFResult
 
 # Initialize the logger
@@ -29,14 +26,11 @@ logging.basicConfig(level=logging.INFO)
 
 
 #
-# This sample illustrates how to extract Text, Table Elements Information from PDF along with renditions of Table
-# elements.
-#
-# It also exports the table renditions in a CSV / XLSX format.
+# This sample illustrates how to extract Text Information from PDF.
 #
 # Refer to README.md for instructions on how to run the samples & understand output zip file.
 #
-class ExtractTextTableInfoWithTableStructureFromPDF:
+class ExtractTextInfoFromPDF:
     def __init__(self, file):
         try:
             input_stream = file.read()
@@ -56,9 +50,7 @@ class ExtractTextTableInfoWithTableStructureFromPDF:
 
             # Create parameters for the job
             extract_pdf_params = ExtractPDFParams(
-                elements_to_extract=[ExtractElementType.TEXT, ExtractElementType.TABLES],
-                elements_to_extract_renditions=[ExtractRenditionsElementType.TABLES],
-                table_structure_type=TableStructureType.CSV,
+                elements_to_extract=[ExtractElementType.TEXT],
             )
 
             # Creates a new job instance
@@ -73,11 +65,12 @@ class ExtractTextTableInfoWithTableStructureFromPDF:
             stream_asset: StreamAsset = pdf_services.get_content(result_asset)
 
             # Creates an output stream and copy stream asset's content to it
-            with open(r"C:\Users\Usama Ahmed\Documents\Quresh_Kitchen\pdf_to_json\output\extract_text_table_info_with_table_structure.zip", "wb") as file:
+            with open("./../output/text_from_PDF.zip", "wb") as file:
                 file.write(stream_asset.get_input_stream())
 
         except (ServiceApiException, ServiceUsageException, SdkException) as e:
             logging.exception(f'Exception encountered while executing operation: {e}')
 
+
 if __name__ == "__main__":
-    ExtractTextTableInfoWithTableStructureFromPDF()
+    ExtractTextInfoFromPDF()

@@ -2,8 +2,8 @@
 quresh_env/
 __pycache__/
 *.pyc
-/Quresh_Database/static/*
-/Quresh_Database/instance/*
+/productstore/static/*
+/productstore/instance/*
 
 # Environment variables
 .env

@@ -19,6 +19,8 @@ from adobe.pdfservices.operation.pdf_services_media_type import PDFServicesMedia
 from adobe.pdfservices.operation.pdfjobs.jobs.extract_pdf_job import ExtractPDFJob
 from adobe.pdfservices.operation.pdfjobs.params.extract_pdf.extract_element_type import ExtractElementType
 from adobe.pdfservices.operation.pdfjobs.params.extract_pdf.extract_pdf_params import ExtractPDFParams
+from adobe.pdfservices.operation.pdfjobs.params.extract_pdf.extract_renditions_element_type import \
+    ExtractRenditionsElementType
 from adobe.pdfservices.operation.pdfjobs.result.extract_pdf_result import ExtractPDFResult
 
 # Initialize the logger
@@ -26,11 +28,12 @@ logging.basicConfig(level=logging.INFO)
 
 
 #
-# This sample illustrates how to extract Text and Table Information with text character bounds from PDF.
+# This sample illustrates how to extract Text, Table Elements Information from PDF along with renditions of Figure,
+# Table elements.
 #
 # Refer to README.md for instructions on how to run the samples & understand output zip file.
 #
-class ExtractTextTableInfoWithCharBoundsFromPDF:
+class ExtractTextTableInfoWithFiguresTablesRenditionsFromPDF:
     def __init__(self, file):
         try:
             input_stream = file.read()
@@ -38,9 +41,9 @@ class ExtractTextTableInfoWithCharBoundsFromPDF:
 
             # Initial setup, create credentials instance
             credentials = ServicePrincipalCredentials(
-                client_id=os.getenv('PDF_SERVICES_CLIENT_ID'),
-                client_secret=os.getenv('PDF_SERVICES_CLIENT_SECRET')
-            )
+            client_id=str(os.getenv('PDF_SERVICES_CLIENT_ID')),
+            client_secret=str(os.getenv('PDF_SERVICES_CLIENT_SECRET'))
+               )
 
             # Creates a PDF Services instance
             pdf_services = PDFServices(credentials=credentials)
@@ -51,7 +54,7 @@ class ExtractTextTableInfoWithCharBoundsFromPDF:
             # Create parameters for the job
             extract_pdf_params = ExtractPDFParams(
                 elements_to_extract=[ExtractElementType.TEXT, ExtractElementType.TABLES],
-                add_char_info=True,
+                elements_to_extract_renditions=[ExtractRenditionsElementType.TABLES, ExtractRenditionsElementType.FIGURES],
             )
 
             # Creates a new job instance
@@ -66,8 +69,7 @@ class ExtractTextTableInfoWithCharBoundsFromPDF:
             stream_asset: StreamAsset = pdf_services.get_content(result_asset)
 
             # Creates an output stream and copy stream asset's content to it
-            output_file_path = self.create_output_file_path()
-            with open(r"C:\Users\Usama Ahmed\Documents\Quresh_Kitchen\pdf_to_json\output\text_table_info_with_char_bounds.zip", "wb") as file:
+            with open("./../output/extract_text_table_info_with_figures_tables_renditions.zip", "wb") as file:
                 file.write(stream_asset.get_input_stream())
 
         except (ServiceApiException, ServiceUsageException, SdkException) as e:
@@ -75,4 +77,4 @@ class ExtractTextTableInfoWithCharBoundsFromPDF:
 
 
 if __name__ == "__main__":
-    ExtractTextTableInfoWithCharBoundsFromPDF()
+    ExtractTextTableInfoWithFiguresTablesRenditionsFromPDF()

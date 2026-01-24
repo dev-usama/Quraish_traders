@@ -21,6 +21,7 @@ from adobe.pdfservices.operation.pdfjobs.params.extract_pdf.extract_element_type
 from adobe.pdfservices.operation.pdfjobs.params.extract_pdf.extract_pdf_params import ExtractPDFParams
 from adobe.pdfservices.operation.pdfjobs.params.extract_pdf.extract_renditions_element_type import \
     ExtractRenditionsElementType
+from adobe.pdfservices.operation.pdfjobs.params.extract_pdf.table_structure_type import TableStructureType
 from adobe.pdfservices.operation.pdfjobs.result.extract_pdf_result import ExtractPDFResult
 
 # Initialize the logger
@@ -31,9 +32,11 @@ logging.basicConfig(level=logging.INFO)
 # This sample illustrates how to extract Text, Table Elements Information from PDF along with renditions of Table
 # elements.
 #
+# It also exports the table renditions in a CSV / XLSX format.
+#
 # Refer to README.md for instructions on how to run the samples & understand output zip file.
 #
-class ExtractTextTableInfoWithRenditionsFromPDF:
+class ExtractTextTableInfoWithTableStructureFromPDF:
     def __init__(self, file):
         try:
             input_stream = file.read()
@@ -55,7 +58,7 @@ class ExtractTextTableInfoWithRenditionsFromPDF:
             extract_pdf_params = ExtractPDFParams(
                 elements_to_extract=[ExtractElementType.TEXT, ExtractElementType.TABLES],
                 elements_to_extract_renditions=[ExtractRenditionsElementType.TABLES],
-                add_char_info=True,
+                table_structure_type=TableStructureType.CSV,
             )
 
             # Creates a new job instance
@@ -70,21 +73,11 @@ class ExtractTextTableInfoWithRenditionsFromPDF:
             stream_asset: StreamAsset = pdf_services.get_content(result_asset)
 
             # Creates an output stream and copy stream asset's content to it
-            output_file_path = self.create_output_file_path()
-            with open(r"C:\Users\Usama Ahmed\Documents\Quresh_Kitchen\pdf_to_json\output\extract_text_table_info_with_renditions.zip", "wb") as file:
+            with open("./../output/extract_text_table_info_with_table_structure.zip", "wb") as file:
                 file.write(stream_asset.get_input_stream())
 
         except (ServiceApiException, ServiceUsageException, SdkException) as e:
             logging.exception(f'Exception encountered while executing operation: {e}')
 
-    # Generates a string containing a directory structure and file name for the output file
-    @staticmethod
-    def create_output_file_path() -> str:
-        now = datetime.now()
-        time_stamp = now.strftime("%Y-%m-%dT%H-%M-%S")
-        os.makedirs("output", exist_ok=True)
-        return f"output/7.zip"
-
-
 if __name__ == "__main__":
-    ExtractTextTableInfoWithRenditionsFromPDF()
+    ExtractTextTableInfoWithTableStructureFromPDF()

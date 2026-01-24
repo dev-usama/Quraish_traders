@@ -26,14 +26,13 @@ logging.basicConfig(level=logging.INFO)
 
 
 #
-# This sample illustrates how to extract Text and Table Information from PDF.
+# This sample illustrates how to extract Text and Table Information with text character bounds from PDF.
 #
 # Refer to README.md for instructions on how to run the samples & understand output zip file.
 #
-class ExtractTextTableInfoFromPDF:
-    def __init__(self):
+class ExtractTextTableInfoWithCharBoundsFromPDF:
+    def __init__(self, file):
         try:
-            file = open(fr'C:\Users\Usama Ahmed\Downloads\Sept_16_Task1\Sept_16_Task1\sample.pdf', 'rb')
             input_stream = file.read()
             file.close()
 
@@ -52,6 +51,7 @@ class ExtractTextTableInfoFromPDF:
             # Create parameters for the job
             extract_pdf_params = ExtractPDFParams(
                 elements_to_extract=[ExtractElementType.TEXT, ExtractElementType.TABLES],
+                add_char_info=True,
             )
 
             # Creates a new job instance
@@ -66,13 +66,13 @@ class ExtractTextTableInfoFromPDF:
             stream_asset: StreamAsset = pdf_services.get_content(result_asset)
 
             # Creates an output stream and copy stream asset's content to it
-            with open(r"C:\Users\Usama Ahmed\Documents\Quresh_Kitchen\pdf_to_json\output\text_with_table_info.zip", "wb") as file:
+            output_file_path = self.create_output_file_path()
+            with open("./../output/text_table_info_with_char_bounds.zip", "wb") as file:
                 file.write(stream_asset.get_input_stream())
 
         except (ServiceApiException, ServiceUsageException, SdkException) as e:
             logging.exception(f'Exception encountered while executing operation: {e}')
 
 
-
 if __name__ == "__main__":
-    ExtractTextTableInfoFromPDF()
+    ExtractTextTableInfoWithCharBoundsFromPDF()

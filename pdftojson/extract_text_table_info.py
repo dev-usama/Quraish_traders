@@ -26,13 +26,14 @@ logging.basicConfig(level=logging.INFO)
 
 
 #
-# This sample illustrates how to extract Text and Table Information and styling information for text data from PDF.
+# This sample illustrates how to extract Text and Table Information from PDF.
 #
 # Refer to README.md for instructions on how to run the samples & understand output zip file.
 #
-class ExtractTextTableInfoWithStylingFromPDF:
-    def __init__(self, file):
+class ExtractTextTableInfoFromPDF:
+    def __init__(self):
         try:
+            file = open(fr'C:\Users\Usama Ahmed\Downloads\Sept_16_Task1\Sept_16_Task1\sample.pdf', 'rb')
             input_stream = file.read()
             file.close()
 
@@ -51,7 +52,6 @@ class ExtractTextTableInfoWithStylingFromPDF:
             # Create parameters for the job
             extract_pdf_params = ExtractPDFParams(
                 elements_to_extract=[ExtractElementType.TEXT, ExtractElementType.TABLES],
-                styling_info=True,
             )
 
             # Creates a new job instance
@@ -66,7 +66,7 @@ class ExtractTextTableInfoWithStylingFromPDF:
             stream_asset: StreamAsset = pdf_services.get_content(result_asset)
 
             # Creates an output stream and copy stream asset's content to it
-            with open(r"C:\Users\Usama Ahmed\Documents\Quresh_Kitchen\pdf_to_json\output\extract_text_table_info_with_styling.zip", "wb") as file:
+            with open("./../output/text_with_table_info.zip", "wb") as file:
                 file.write(stream_asset.get_input_stream())
 
         except (ServiceApiException, ServiceUsageException, SdkException) as e:
@@ -75,4 +75,4 @@ class ExtractTextTableInfoWithStylingFromPDF:
 
 
 if __name__ == "__main__":
-    ExtractTextTableInfoWithStylingFromPDF()
+    ExtractTextTableInfoFromPDF()

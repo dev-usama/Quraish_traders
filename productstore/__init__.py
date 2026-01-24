@@ -38,7 +38,7 @@ class Product(db.Model):
 @project1.route('/')
 def index():
     products = Product.query.all()
-    return render_template('Quresh_Database/index.html', products=products)
+    return render_template('productstore/index.html', products=products)
 
 @project1.route('/upload_excel', methods=['GET', 'POST'])
 def upload_excel():
@@ -58,7 +58,7 @@ def upload_excel():
             os.remove(file_path)  # Remove the file after processing
             flash('Excel file processed successfully')
             return redirect(url_for('excel_to_db.index'))
-    return render_template('Quresh_Database/upload_excel.html')
+    return render_template('productstore/upload_excel.html')
 
 @project1.route('/generate_pdf', methods=['POST'])
 def generate_pdf():
@@ -128,7 +128,7 @@ def add_product():
         db.session.commit()
         flash('Product added successfully')
         return redirect(url_for('excel_to_db.index'))
-    return render_template('Quresh_Database/add_product.html')
+    return render_template('productstore/add_product.html')
 
 @project1.route('/edit_product/<int:product_id>', methods=['GET', 'POST'])
 def edit_product(product_id):
@@ -148,7 +148,7 @@ def edit_product(product_id):
         db.session.commit()
         flash('Product updated successfully')
         return redirect(url_for('excel_to_db.index'))
-    return render_template('/Quresh_Database/index.html', product=product)
+    return render_template('/productstore/index.html', product=product)
 
 @project1.route('/delete_product/<int:product_id>', methods=['POST'])
 def delete_product(product_id):
