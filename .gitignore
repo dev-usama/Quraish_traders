@@ -4,6 +4,12 @@ __pycache__/
 *.pyc
 /productstore/static/*
 /productstore/instance/*
+/pdftojson/static/*
+/pdftojson/output/*
+/static/*
+/static/images/*
+/uploads/*
+/instance/*
 
 # Environment variables
 .env
