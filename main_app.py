@@ -5,17 +5,19 @@ import os
 
 app = Flask(__name__)
 CORS(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = r'sqlite:///C:\Users\Usama Ahmed\Documents\Quresh_Kitchen\Quresh_Database\instance\product_database.db'
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+app.config['SQLALCHEMY_DATABASE_URI'] = (
+    f"sqlite:///{os.path.join(BASE_DIR, 'productmanager/instance/product_database.db')}"
+)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = os.environ.get("task2_key")  # Change this to a secure random key
+app.config['SECRET_KEY'] = os.environ.get("secret_key")
+print('Secret Key:', os.environ.get("secret_key"))
 app.config['UPLOAD_FOLDER'] = 'uploads'
 db = SQLAlchemy(app)
 from Quresh_Database import project1
-from EXCEL_TO_PDF_2 import project2
 from pdf_to_json import project3
 
 app.register_blueprint(project1, url_prefix="/excel_to_db")
-app.register_blueprint(project2, url_prefix="/excel_to_db_02")
 app.register_blueprint(project3, url_prefix="/PDF_TO_JSON")
 
 @app.route("/")

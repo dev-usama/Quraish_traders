@@ -118,7 +118,6 @@ def add_product():
             product_name=request.form.get('product_name'),
             specification=request.form.get('specification'),
             price=float(request.form.get('price', 0)),
-            # additional_info removed
         )
         if 'image' in request.files:
             file = request.files['image']
@@ -149,7 +148,7 @@ def edit_product(product_id):
         db.session.commit()
         flash('Product updated successfully')
         return redirect(url_for('excel_to_db.index'))
-    return render_template('Quresh_Database/edit_product.html', product=product)
+    return render_template('/Quresh_Database/index.html', product=product)
 
 @project1.route('/delete_product/<int:product_id>', methods=['POST'])
 def delete_product(product_id):
@@ -209,7 +208,7 @@ def process_excel(file_path):
                     i+=1
                     continue
                 i += 1
-                path = fr"C:\Users\Usama Ahmed\Documents\Quresh_Kitchen\Quresh_Database\static\dummy.{image.format}"
+                path = fr"./static/dummy.{image.format}"
                 image.save(path)
                 with open(path, "rb") as x:
                     file = x.read()
