@@ -7,11 +7,10 @@ app = Flask(__name__)
 CORS(app)
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = (
-    f"sqlite:///{os.path.join(BASE_DIR, 'productmanager/instance/product_database.db')}"
+    f"sqlite:///{os.path.join(BASE_DIR, 'productstore/instance/product_database.db')}"
 )
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = os.environ.get("secret_key")
-print('Secret Key:', os.environ.get("secret_key"))
 app.config['UPLOAD_FOLDER'] = 'uploads'
 db = SQLAlchemy(app)
 from productstore import project1
